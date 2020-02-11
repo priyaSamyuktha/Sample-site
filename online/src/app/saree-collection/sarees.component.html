@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <div *ngFor="let plist of products; let i=index" class="col-md-4 col-sm-6">      
+            <div class="product-image2"> <a href="#"> <img class="picStyle" src="{{plist.imgURL}}"></a>
+            </div>
+            <div class="product-content">
+                <h3 class="title"><a href="#">{{plist.name}}</a></h3> 
+                <span class="price">Rs.{{plist.price}}</span>
+            </div>
+            <a [routerLink]="['/cart', { id:plist.prodID }]">Buy Now</a>
+            <hr>
+        </div>
+        
+    </div>
+</div>

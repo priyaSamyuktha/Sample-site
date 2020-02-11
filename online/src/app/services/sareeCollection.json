@@ -1,0 +1,58 @@
+
+    [
+        
+        {
+            "id": "00001",
+            "name": "design1",
+            "price": "500",
+            "imgURL": "../../assets/images/sarees/saree1.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        },
+        {
+            "id": "00002",
+            "name": "design2",
+            "price": "700",
+            "imgURL": "../../assets/images/sarees/saree2.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        },       
+        {
+            "id": "00003",
+            "name": "design3",
+            "price": "800",
+            "imgURL": "../../assets/images/sarees/saree3.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        },
+        {
+            "id": "00004",
+            "name": "design4",
+            "price": "600",
+            "imgURL": "../../assets/images/sarees/saree4.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        },
+        {
+            "id": "00005",
+            "name": "design5",
+            "price": "1500",
+            "imgURL": "../../assets/images/sarees/saree5.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        },
+        {
+            "id": "00006",
+            "name": "design6",
+            "price": "900",
+            "imgURL": "../../assets/images/sarees/saree6.jpg",
+            "addedToCart": "",
+            "purchaseSelected": "",
+            "Type": ""
+        }
+    ]

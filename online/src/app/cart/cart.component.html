@@ -1,0 +1,27 @@
+<h3>Products added to the cart</h3> 
+<hr>
+<div class="container">
+        <div *ngFor="let item of cart">
+                <div class="row">
+                     <div class="col">
+                         <img src="{{item.imgURL}}" width="250">
+                     </div>
+                     <div class="col">
+                        <span>Product Name:<h2>{{item.name}}</h2></span> 
+                         Product price:<h2>Rs.{{item.price}}</h2>
+                         Quantity:<input type="number" [(ngModel)] ="quantity">
+                     </div>
+                     <div>
+                          <button (click)="remove(item.prodID)">Delete</button>
+                     </div>
+                </div>
+             </div>
+             <hr>
+             <div>
+                 <td colspan="6" align="right">Total Amount</td>
+                 <td>{{total}}</td>
+        </div>
+        <hr>
+         
+</div>
+   

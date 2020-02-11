@@ -1,0 +1,25 @@
+<div class="container col-md-6 ">
+<h2>Login</h2>
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)" novalidate   >
+    <div class="form-group">
+        <label for="mailid">Email</label>
+        <input type="text" required name="mailid" class="form-control" [(ngModel)]="mailid" />
+    </div>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input name="id" type="hidden" [(ngModel)]="id" />  
+        <input type="text" required name="name" class="form-control" [(ngModel)]="name" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" required  name="password" class="form-control" [(ngModel)]="password"/>
+    </div>  
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+        </button>
+        <a routerLink="/signin" class="btn btn-link">SignIn</a>
+    </div>  
+</form>
+</div>  
