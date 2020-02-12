@@ -2,6 +2,8 @@ var express = require('express');
 var path = require("path");   
 var bodyParser = require('body-parser');  
 var mongo = require("mongoose");  
+var jwt = require('jwt-simple');
+var moment = require('moment');
   
 var db = mongo.connect("mongodb://localhost:27017/Textiles", function(err, response){  
    if(err){ console.log( "there is a error in connection"); }  
@@ -14,7 +16,9 @@ app.use(bodyParser());
 app.use(bodyParser.json({limit:'5mb'}));   
 app.use(bodyParser.urlencoded({extended:true}));  
    
-  
+//JWT TOKEN
+app.set('jwtTokenSecret', 'textile_sample');
+
 app.use(function (req, res, next) {        
      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');    
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
@@ -110,13 +114,29 @@ app.post("/api/SaveUser",function(req,res){
 
   app.post("/api/UserLogin",function(req,res){   
     model.findOne ({ 'name': req.body.name },  
-      function(err,data) {  
+      function(err,user) {  
       if (err) {  
-      res.send(err);         
+      res.send(401);         
       }  
-      else{        
-             res.send({data:"User logged in..!!"});  
-        }  
+      if (!user) {
+        // incorrect username
+        return res.send(401);
+      }
+    
+      var expires = moment().add('days', 7).valueOf();
+        var token = jwt.encode({
+             iss: user.id,
+            exp: expires
+        }, app.get('jwtTokenSecret'));
+
+        res.json({
+         token : token,
+            expires: expires,
+         user: user.toJSON()
+        });
+             
+     res.send(200);  
+        
     });  
      
     })  

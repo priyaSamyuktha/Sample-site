@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {CommonService} from '../services/common.service'
+import {JwtService} from '../services/jwt.service'
 
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private newService: CommonService,
-        
+        private tokenService: JwtService
     ) {
         /* redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
         user.mode= this.valbutton;  
         //alert(JSON.stringify(user));
 
-         this.newService.userLogin(user)  
+         this.tokenService.login(user)  
          .subscribe(data =>  {  alert(data.data);  
                sessionStorage.setItem('mailid', user.mailid);
          }   
