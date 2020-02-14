@@ -44,7 +44,7 @@ var productSchema = new Schema({
 });
 
 var cartSchema = new Schema({
-    mail: { type: String },     
+    mailid: { type: String },     
   
         prodID : String,        
         quantity : Number
@@ -113,7 +113,7 @@ app.post("/api/SaveUser",function(req,res){
   
 
   app.post("/api/UserLogin",function(req,res){   
-    model.findOne ({ 'name': req.body.name },  
+    model.findOne ({ 'mailid': req.body.mailid },  
       function(err,user) {  
       if (err) {  
       res.send(401);         
@@ -122,10 +122,11 @@ app.post("/api/SaveUser",function(req,res){
         // incorrect username
         return res.send(401);
       }
-    
-      var expires = moment().add('days', 7).valueOf();
+
+    if (user && user.password === req.body.password && user.name === req.body.name){
+        var expires = moment().add('days', 7).valueOf();
         var token = jwt.encode({
-             iss: user.id,
+            iss: user.mailid,
             exp: expires
         }, app.get('jwtTokenSecret'));
 
@@ -134,9 +135,12 @@ app.post("/api/SaveUser",function(req,res){
             expires: expires,
          user: user.toJSON()
         });
-             
-     res.send(200);  
-        
+      }
+      else{
+        return res.send("incorrect credential");
+      }
+    
+    
     });  
      
     })  
@@ -178,15 +182,54 @@ app.post("/api/SaveUser",function(req,res){
 
         //Get cart items
 
-        app.get("/api/getCart",function(req,res){  
-            cartModel.find({},function(err,data){  
+        app.get("/api/getCart",function(req,res){ 
+            
+            var token =  req.headers['x-access-token'];
+
+            if (token) {
+                try {
+                  var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
+                  console.log("In cart" + decoded.iss); 
+                
+                  if (decoded.exp <= Date.now()) {
+                    res.end('Access token has expired', 400);
+                  }
+
+                  model.findOne({ mailid: decoded.iss }, function(err, user) {
+                    req.user = user;
+                    console.log("in server"+req.user.mailid);
+
+                        if(req.user.mailid)
+                        {
+                            cartModel.find({mailid: req.user.mailid},function(err,data){  
+                                if(err){  
+                                    res.send(err);  
+                                }  
+                                else{                
+                                    res.send(data);  
+                                    }  
+                            });
+                        }
+                        else{
+
+                          }
+                  });
+              
+                } catch (err) {
+                  return err;
+                }
+              } else {
+                
+              }
+
+          /*      cartModel.find({},function(err,data){  
                       if(err){  
                           res.send(err);  
                       }  
                       else{                
                           res.send(data);  
                           }  
-                  });  
+                  }); */ 
           })  
     
         

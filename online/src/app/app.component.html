@@ -2,9 +2,11 @@
   <nav class="navbar nav-color justify-content-between">
     <div class="navbar-brand brand-font">For bulk orders call 693778978879 </div>
     <div class="form-inline">
-      <button class="btn btn-outline-success mr-sm-2" type="submit" routerLink="/login" routerLinkActive="active">LogIn</button>
+      <button class="btn btn-outline-success mr-sm-2" type="submit" (click)="loginCheck()">LogIn</button>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="/signin" routerLinkActive="active">Create Account</button>
-      <a routerLink="/cart">Cart</a>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="logout()" >Log out</button>
+
+      <a  routerLink="/cart">Cart</a>
     </div>
   </nav>
 </div>

@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private newService: CommonService,
-        private tokenService: JwtService
+        private tokenService: JwtService,
+        private router: Router
     ) {
         /* redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -32,15 +33,16 @@ export class LoginComponent implements OnInit {
    
 
     onSubmit = function(user,isValid: boolean) {  
-  
+
         user.mode= this.valbutton;  
         //alert(JSON.stringify(user));
 
          this.tokenService.login(user)  
          .subscribe(data =>  {  alert(data.data);  
-               sessionStorage.setItem('mailid', user.mailid);
+               
+               this.router.navigateByUrl('/home');
          }   
-         , error => this.errorMessage = "error" )  
+         , error => alert("Incorrect credential.."))  
            
        }
 }

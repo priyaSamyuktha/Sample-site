@@ -16,7 +16,8 @@ export class SigninComponent implements OnInit {
 
     constructor(
         private newService: CommonService,
-        private tokenService: JwtService
+        private tokenService: JwtService,
+        private router: Router
     ) {
         /* redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -31,11 +32,11 @@ export class SigninComponent implements OnInit {
    
 
     onSubmit = function(user,isValid: boolean) {  
-  alert(JSON.stringify(user));
+        alert(JSON.stringify(user));
         user.mode= this.valbutton;  
          this.tokenService.register(user)  
          .subscribe(data =>  {  alert(data.data);  
-              
+           this.router.navigateByUrl('/login');
          }   
          , error => this.errorMessage = "error" )  
            

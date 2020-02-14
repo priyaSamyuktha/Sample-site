@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
 	private flag = 0;
 	private total = 0;
 	private cart: any = [];
+	private mailid : any;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -33,8 +34,11 @@ export class CartComponent implements OnInit {
 			this.id = params['id'];
 			
 		});
-		    
+		 
+		this.mailid = localStorage.getItem('mailid');
 			
+		if(this.mailid)	
+		{
 			
 				this.newService.GetCart()  
 					.subscribe(
@@ -43,11 +47,11 @@ export class CartComponent implements OnInit {
 							
 					if (this.id) {
 
-						let mailid = sessionStorage.getItem('mailid');
+						
 						
 
 								this.userDetail = { 
-									"mail": mailid,     
+									"mailid": this.mailid,     
 									"prodID" : this.id,        
 									"quantity" : 1	    
 								 };
@@ -81,7 +85,7 @@ export class CartComponent implements OnInit {
 		
 				}   
 				 )
-	
+		}
 			 
 		
 	}

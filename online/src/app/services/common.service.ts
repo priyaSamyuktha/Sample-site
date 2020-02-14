@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';   
-import {Http,Response } from '@angular/http';   
+import {Http,Response,Headers, RequestOptions } from '@angular/http';  
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 
 import { map } from 'rxjs/operators';
 
@@ -8,6 +9,8 @@ import { map } from 'rxjs/operators';
 export class CommonService {  
   
   constructor(private http: Http) { }  
+
+  private access_token :any;
   
   saveUser(user){      
     return this.http.post('http://localhost:8080/api/SaveUser/', user)  
@@ -29,8 +32,12 @@ export class CommonService {
     return this.http.get('http://localhost:8080/api/getUser/')  
             .pipe(map((response: Response) => response.json()))              
   }
-  GetCart(){       
-    return this.http.get('http://localhost:8080/api/getCart/')  
+  GetCart(){   
+    this.access_token = localStorage.getItem('access_token'); 
+    const headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': this.access_token});
+    const options = new RequestOptions({ headers: headers });
+
+    return this.http.get('http://localhost:8080/api/getCart/', options)  
             .pipe(map((response: Response) => response.json()))              
   }   
   GetProducts(){
