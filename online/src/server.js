@@ -166,6 +166,8 @@ app.post("/api/SaveUser",function(req,res){
       var cartModel = mongo.model('cart', cartSchema, 'cart'); 
 
       app.post("/api/SaveProductsToCart",function(req,res){   
+        console.log("save"+ JSON.stringify(req.body));
+             
         var cart = new cartModel(req.body);  
            cart.save(function(err,data){  
                
@@ -189,7 +191,7 @@ app.post("/api/SaveUser",function(req,res){
             if (token) {
                 try {
                   var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
-                  console.log("In cart" + decoded.iss); 
+                  //console.log("In cart" + decoded.iss); 
                 
                   if (decoded.exp <= Date.now()) {
                     res.end('Access token has expired', 400);
@@ -197,7 +199,7 @@ app.post("/api/SaveUser",function(req,res){
 
                   model.findOne({ mailid: decoded.iss }, function(err, user) {
                     req.user = user;
-                    console.log("in server"+req.user.mailid);
+                  //  console.log("in server"+req.user.mailid);
 
                         if(req.user.mailid)
                         {
@@ -231,6 +233,49 @@ app.post("/api/SaveUser",function(req,res){
                           }  
                   }); */ 
           })  
+
+
+          //Remove cart products on delete
+
+          
+
+    app.post("/api/DeleteProductFromCart",function(req,res){   
+           
+            var token =  req.headers['x-access-token'];
+            var prodID = req.body.prodID;
+            console.log("id"+ JSON.stringify(req.body));
+             
+            if (token) {
+                try {
+                  var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
+                                  
+                  if (decoded.exp <= Date.now()) {
+                    res.end('Access token has expired', 400);
+                  }
+
+                  model.findOne({ mailid: decoded.iss }, function(err, user) {
+                    req.user = user;
+                    
+                        if(req.user.mailid)
+                        {   
+                            cartModel.deleteOne({ prodID: prodID , mailid: req.user.mailid }, function(err) {    
+                                if(err){    
+                                    res.send(err);    
+                                }    
+                                else{      
+                                       res.send({data:"Record has been Deleted..!!"});               
+                                   }    
+                            });    
+                        }  
+                  })
+                }
+                catch{
+
+                }
+            }
+
+
+           }) 
     
         
         //Load product details based on add to cart

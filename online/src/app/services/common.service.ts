@@ -45,10 +45,17 @@ export class CommonService {
             .pipe(map((response: Response) => response.json()))
   }
 
- deleteUser(id){   
-    return this.http.post('http://localhost:8080/api/deleteUser/',{'id': id})  
+ deleteProductFromCart(params){ 
+  this.access_token = localStorage.getItem('access_token'); 
+  const headers = new Headers({'x-access-token': this.access_token});
+  const options = new RequestOptions({ headers: headers });
+    
+    return this.http.post('http://localhost:8080/api/DeleteProductFromCart/',params,options)  
             .pipe(map((response: Response) =>response.json()))               
   }  
+
+   
+
   
 }  
 

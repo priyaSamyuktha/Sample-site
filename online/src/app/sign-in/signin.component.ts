@@ -32,7 +32,7 @@ export class SigninComponent implements OnInit {
    
 
     onSubmit = function(user,isValid: boolean) {  
-        alert(JSON.stringify(user));
+        //alert(JSON.stringify(user));
         user.mode= this.valbutton;  
          this.tokenService.register(user)  
          .subscribe(data =>  {  alert(data.data);  

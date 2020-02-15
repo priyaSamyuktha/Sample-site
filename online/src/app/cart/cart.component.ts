@@ -29,7 +29,8 @@ export class CartComponent implements OnInit {
 	) { }
 
 	async ngOnInit() {
- 
+
+ 		
 		this.activatedRoute.params.subscribe(params => {
 			this.id = params['id'];
 			
@@ -64,7 +65,7 @@ export class CartComponent implements OnInit {
 									this.flag = 1;
 								}
 							}
-							alert(this.flag);
+							//alert(this.flag);
 							if(this.flag == 0) //Only if product is not in cart add to Cart
 							{
 								this.newService.saveProdToCart(this.userDetail)  
@@ -91,6 +92,7 @@ export class CartComponent implements OnInit {
 	}
 
 	loadCart(): void {
+		
 
 		this.newService.GetCart()  
 			.subscribe(
@@ -100,7 +102,8 @@ export class CartComponent implements OnInit {
 						{	
 							this.newService.GetProducts()  
 								.subscribe(data =>  {  
-			 					 this.products = data;  
+								  this.products = data;  
+								  this.cart = [];
 			  						if(this.products)
 			  						{
 				 					 for(let i=0;i<this.cartList.length;i++)
@@ -124,7 +127,7 @@ export class CartComponent implements OnInit {
 					})
 		 
 		
-		console.log(JSON.stringify(this.cart))
+		//console.log(JSON.stringify(this.cart))
 
 		
 
@@ -141,17 +144,19 @@ export class CartComponent implements OnInit {
 		}*/
 	}
 
-	remove(id: string): void {
-		let cart: any = JSON.parse(localStorage.getItem('cart'));
-		let index: number = -1;
-		for (var i = 0; i < cart.length; i++) {
-			let item: Item = JSON.parse(cart[i]);
-			if (item.product.id == id) {
-				cart.splice(i, 1);
-				break;
-			}
-		}
-		localStorage.setItem("cart", JSON.stringify(cart));
+	remove(prodID: any): void {
+		
+		let params : any;
+		params = {"prodID":prodID};
+		alert(params);
+		this.newService.deleteProductFromCart(params)
+		.subscribe(data =>
+			 {
+				 alert(JSON.stringify(data));
+			 }
+
+		)
+		
 		this.loadCart();
 	}
 

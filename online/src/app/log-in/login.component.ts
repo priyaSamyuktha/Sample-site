@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         //alert(JSON.stringify(user));
 
          this.tokenService.login(user)  
-         .subscribe(data =>  {  alert(data.data);  
+         .subscribe(data =>  {  
                
                this.router.navigateByUrl('/home');
          }   
